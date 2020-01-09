@@ -22,11 +22,11 @@ const Drawer = (props) => (
             onClick={props.toggle( false)}
             onKeyDown={props.toggle( false)} >
             <List>
-                <ListItem button component={Link} to='/calculator' >
+                <ListItem button key='Calculator' component={Link} to='/calculator' >
                     <ListItemIcon><DialpadIcon /></ListItemIcon>
                     <ListItemText primary='Calculator' />
                 </ListItem>
-                <ListItem button component={Link} to='/pension' >
+                <ListItem button key='Pension' component={Link} to='/pension' >
                     <ListItemIcon><AccountBalanceIcon /></ListItemIcon>
                     <ListItemText primary='Pension' />
                 </ListItem>
