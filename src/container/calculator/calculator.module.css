@@ -1,0 +1,14 @@
+.Calculator{
+    text-align: center
+}
+
+.Salary{
+    margin-top: 15px;
+}
+
+.Table{
+    max-width: 500px;
+    display: inline-block;
+    margin:10px 0px;
+}
+

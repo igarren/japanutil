@@ -81,7 +81,7 @@ const Header = (props) => {
 
     const classes = useStyles();
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{marginBottom : '15px'}}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
