@@ -1,12 +1,18 @@
-import React from 'react';
+import React , {useState }from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+
+import Drawer from '../../ui/drawer/drawer';
+
+
+
 import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -61,6 +67,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 const Header = (props) => {
+    const [state, setState] = useState({
+        toggle: false
+    });
+
+    const toggleDrawer = (open) => event => {
+        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ toggle: open });
+    };
 
     const classes = useStyles();
     return (
@@ -72,27 +89,16 @@ const Header = (props) => {
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="open drawer"
+                        onClick={toggleDrawer(!state.toggle)}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
                         Japan Util
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
                 </Toolbar>
             </AppBar>
+            <Drawer status={state.toggle} toggle={toggleDrawer} />
         </div>
     )
 };
