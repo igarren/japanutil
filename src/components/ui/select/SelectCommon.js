@@ -13,6 +13,7 @@ const SelectCommon = (props) => (
             className={classes.Select}
             labelId={props.id + '-label'}
             id={props.id}
+            value={props.value}
             onChange={props.handleChange}
             autoWidth="true"
             >

@@ -1,5 +1,4 @@
 .Pension-container {
-  padding-top: 2em;
   text-align: left;
 }
 
@@ -13,5 +12,6 @@
 }
 
 .Pension-container.Pension-result {
+  padding-top: 2em;
   text-align: center;
 }
