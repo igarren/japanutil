@@ -34,13 +34,14 @@ const input = (props) => {
                 label={props.label} 
                 value={props.value}
                 onChange={props.changed}
+                type={props.type}
                 variant="outlined" />);
             break;
 
     }
     return (
         
-        <FormControl variant="outlined" className={classes.Input} >
+        <FormControl variant="outlined" className={classes.Input} data-type={props.type}>
             {inputControl}
         </FormControl>
 
