@@ -1,3 +1,7 @@
 .Input {
     width: 100%
 }
+
+.Input[data-type=number] {
+  width: unset;
+}
