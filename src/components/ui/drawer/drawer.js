@@ -22,7 +22,7 @@ const Drawer = (props) => (
             onClick={props.toggle( false)}
             onKeyDown={props.toggle( false)} >
             <List>
-                <ListItem button key='Calculator' component={Link} to='/calculator' >
+                <ListItem button key='Calculator' component={Link} to='/immig-calc' >
                     <ListItemIcon><DialpadIcon /></ListItemIcon>
                     <ListItemText primary='Calculator' />
                 </ListItem>

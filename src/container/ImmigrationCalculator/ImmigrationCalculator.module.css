@@ -1,0 +1,32 @@
+.ImmigrationCalculator{
+    text-align: center;
+    display: inline;
+}
+
+.Salary{
+    margin-top: 15px;
+}
+
+.Table{
+    max-width: 500px;
+    display: inline-block;
+    margin:10px 0px;
+}
+
+
+.PointsHeader {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2
+  }
+
+  .PointsHeaderDefault{}
+  .PointsHeaderStick{
+      border-bottom: 1px solid black;
+      background: #3f51b5;
+  }
+  .PointsHeaderStick h1{
+      color: white;
+    margin: 0;
+}
