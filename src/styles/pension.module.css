@@ -1,0 +1,17 @@
+.Pension-container {
+    text-align: left;
+  }
+  
+  .Pension-container > form > div {
+    padding-top: .5em;
+  }
+  
+  .Pension-container-action > {
+    padding-top: 2.5em;
+    text-align: center;
+  }
+  
+  .Pension-container.Pension-result {
+    padding-top: 2em;
+    text-align: center;
+  }

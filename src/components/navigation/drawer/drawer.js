@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import {Link} from 'react-router-dom';
+import {Link} from 'gatsby';
 
 
 
@@ -22,7 +22,7 @@ const Drawer = (props) => (
             onClick={props.toggle( false)}
             onKeyDown={props.toggle( false)} >
             <List>
-                <ListItem button key='Calculator' component={Link} to='/immig-calc' >
+                <ListItem button key='Calculator' component={Link} to='/immigration' >
                     <ListItemIcon><DialpadIcon /></ListItemIcon>
                     <ListItemText primary='Calculator' />
                 </ListItem>
@@ -34,4 +34,4 @@ const Drawer = (props) => (
         </div>
     </SwipeableDrawer>
 );
-export default Drawer
+export default Drawer;
