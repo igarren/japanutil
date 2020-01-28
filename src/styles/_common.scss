@@ -1,0 +1,9 @@
+.Container {
+    margin: 0 auto;
+    text-align: center;
+    max-width:  960px;
+    padding: 0 1.0875rem 1.45rem;
+    &.Even {
+        background-color: #D6D7DA;
+    }
+}

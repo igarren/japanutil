@@ -1,3 +1,8 @@
+:global .MuiPaper-elevation16{
+      /* background-color: #FCF7F8!important; */
+  }
+
 .Drawer{
     width: 250px;
+    /* background-color: #FCF7F8; */
 }

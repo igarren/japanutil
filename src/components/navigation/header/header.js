@@ -25,7 +25,7 @@ const Header = (props) => {
 
   return (
       <div className={classes.Header}>
-          <AppBar className={classes.AppBar} position="static">
+          <AppBar className={classes.AppBar} position="static" >
               <Toolbar>
                   <IconButton
                       edge="start"
