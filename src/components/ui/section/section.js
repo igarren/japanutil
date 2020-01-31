@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 const Section = (props) => {
     const stl = useStyles();
     return (
-        <div  style={{ border: '1px solid #ccc',  boxShadow: '21px 5px 13px -10px #ccc'}}>
+        <div >
             <div>
                 <Grid container alignItems="center">
                     <Grid item xs>

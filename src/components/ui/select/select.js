@@ -12,7 +12,7 @@ const CustomSelect = (props) => {
       setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
     return(
-        <FormControl variant="outlined" style={{minWidth: '250px'}} >
+        <FormControl variant="outlined" style={{width: '100%'}} >
             <InputLabel ref={inputLabel} id="demo-simple-select-helper-label" >{props.text}</InputLabel>
             <Select
                 labelId="demo-simple-select-helper-label"
