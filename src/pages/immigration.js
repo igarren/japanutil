@@ -37,13 +37,20 @@ const Immigration = () => {
     const [selectedEducation, setSelectedEducation] = useState('');
     const [selectedCareer, setSelectedCareer] = useState('');
     const [chkMoreDegree, setChkMoreDegree] = useState(false);
+    const [chkResearch, setChkResearch] = useState({
+        first : false,
+        second : false,
+        third : false,
+        fourth : false
+    });
     const [points, setPoints] = useState({
-        ativity: 0,
+        activity: 0,
         age: 0,
         education: 0,
         career: 0,
         additionalDegree : 0,
-        salary: 0
+        salary: 0,
+        research : 0
     });
 
     const selectedEducationHandler = event => {
@@ -122,6 +129,17 @@ const Immigration = () => {
         setSalary(salaryValue);
         setPoints({...points,['salary'] : salaryPoints});
     }
+
+    const researchChangeHandler = ( label, event) => {
+        setPoints({...chkResearch, [label] : !chkResearch[label]});
+
+        if(chkResearch['first'] || chkResearch['second'] || chkResearch['third'] || chkResearch['fourth']) {
+            setPoints({...points,['research'] : 5});
+        } else {
+            setPoints({...points,['research'] : 0});
+        }
+    } 
+
     const sumValues = obj => Object.values(obj).reduce((a, b) => Number(a)+ Number(b));
 
     return (
@@ -153,10 +171,10 @@ const Immigration = () => {
                         <h3>Bonus Points</h3>
                        <Grid item xs={12} >
                             <h3>Research Activities</h3>
-                                <CustomCheckbox label='Patent invention 1 item or more' />
-                                <CustomCheckbox label='Have conducted projects financed by a competitive fund, etc. by a foreign national government at least three times' />
-                                <CustomCheckbox label='Have published at least three papers in academic journals listed in the academic journal database' />
-                                <CustomCheckbox label="Have made other research achievements recognized by Japan's Minister of Justice " />
+                                <CustomCheckbox change={event => researchChangeHandler('first', event)}  checked ={chkResearch.first} label='Patent invention 1 item or more' />
+                                <CustomCheckbox change={event => researchChangeHandler('second', event)}  checked ={chkResearch.second} label='Have conducted projects financed by a competitive fund, etc. by a foreign national government at least three times' />
+                                <CustomCheckbox change={event => researchChangeHandler('third', event)}  checked ={chkResearch.third} label='Have published at least three papers in academic journals listed in the academic journal database' />
+                                <CustomCheckbox change={event => researchChangeHandler('fourth', event)}  checked ={chkResearch.fourth} label="Have made other research achievements recognized by Japan's Minister of Justice " />
                             
                         </Grid >
                         <Grid item xs={12} >
