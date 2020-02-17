@@ -1,14 +1,14 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    description: `Welcome to Japan Util. All the utilities you need while living in Japan!`,
+    author: `@Brethren Igarashi`,
   },
   plugins: [
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-158584716-1",
+        trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'none',
         head: true,
       },
     },
