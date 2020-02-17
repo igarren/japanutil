@@ -4,7 +4,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const CustomCheckbox = (props) => (
     <FormControlLabel 
-        style={{margin:'-2px'}} 
+        style={{margin:'4px -2px'}} 
         checked={props.checked} 
         onChange={props.change} 
         control={<Checkbox value={props.value}  />} 

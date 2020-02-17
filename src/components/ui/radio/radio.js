@@ -17,7 +17,7 @@ const CustomRadio = (props) => (
       component="fieldset" >
         <RadioGroup  value={props.value} onChange={props.change}>
           {props.data.map(item => (
-            <FormControlLabel value={item.value} control={<Radio />} 
+            <FormControlLabel key={item.value}  value={item.value} control={<Radio />} 
             label={item.text} />
           ))}
         </RadioGroup>

@@ -17,10 +17,10 @@ const CustomSelect = (props) => {
             <InputLabel ref={inputLabel} id="demo-simple-select-helper-label" >{props.text}</InputLabel>
             <Select
                 labelId="demo-simple-select-helper-label"
+                value={props.value}
                 id="demo-simple-select-helper"
                 labelWidth={labelWidth}
                 onChange={props.change} >
-                <MenuItem value=""> <em>None</em> </MenuItem>
                 {props.data.map(item => (
                     <MenuItem key={item.value} value={item.value}>{item.text}</MenuItem>
                 ))}
