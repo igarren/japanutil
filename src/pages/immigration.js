@@ -432,6 +432,8 @@ const Immigration = () => {
 
     let disqusConfig = {
         url: `www.japanutil.com`,
+        identifier: 'immigration',
+        title: 'Immigration',
     }
 
     return (
