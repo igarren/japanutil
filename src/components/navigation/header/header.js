@@ -1,5 +1,6 @@
 import React , {useState }from 'react';
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -27,18 +28,10 @@ const Header = (props) => {
       <div className={classes.Header}>
           <AppBar className={classes.AppBar} position="static" >
               <Toolbar>
-                  <IconButton
-                      edge="start"
-                      className={classes.MenuButton}
-                      color="inherit"
-                      aria-label="open drawer"
-                      onClick={toggleDrawer(!state.toggle)}
-                  >
-                      <MenuIcon />
-                  </IconButton>
                   <Typography className={classes.Title} variant="h6" noWrap component={Link} to='/'>
                       Japan Util
                   </Typography>
+                  <Button color="inherit" component={Link} to='/immigration'>Immigration Calculator</Button>
               </Toolbar>
           </AppBar>
           <Drawer status={state.toggle} toggle={toggleDrawer} />

@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Section from '../components/ui/section/section';
 import CustomRadio from '../components/ui/radio/radio';
 import CustomCheckbox from '../components/ui/checkbox/checkbox';
+import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
 
 const activities = [
     {text : 'Academic research', value : 'acad'},
@@ -47,6 +48,7 @@ const Immigration = () => {
     const [salary, setSalary] = useState('');
     const [selectedActivity, setSelectedActivity] = useState('acad');
     const [selectedEducation, setSelectedEducation] = useState('');
+    const [selectedLanguage, setSelectedLanguage] = useState('');
     const [selectedCareer, setSelectedCareer] = useState('');
     const [selectedLicense, setSelectedLicense] = useState('');
     const [chkMoreDegree, setChkMoreDegree] = useState(false);
@@ -55,6 +57,9 @@ const Immigration = () => {
     const [chkProject, setChkProject] = useState(false);
     const [chkUniversity, setChkUniversity] = useState(false);
     const [chkTraining, setChkTraining] = useState(false);
+    const [chkDirector, setChkDirector] = useState(false);
+    const [chkBoard, setChkBoard] = useState(false);
+    const [chkInvestment, setChkInvestment] = useState(false);
     const [chkResearch, setChkResearch] = useState({
         first : false,
         second : false,
@@ -71,6 +76,7 @@ const Immigration = () => {
         activity: 0,
         age: 0,
         education: 0,
+        language: 0,
         career: 0,
         additionalDegree : 0,
         salary: 0,
@@ -84,6 +90,9 @@ const Immigration = () => {
         mojProject : 0,
         mojUniversity : 0,
         mojTraining : 0,
+        director : 0,
+        board : 0,
+        investment : 0,
     });
 
     const activitiesChangeHandler = event => {
@@ -93,12 +102,40 @@ const Immigration = () => {
         let careerPoints = calculateCareerPoints(selectedCareer, event.target.value);
         let salaryPoints = calculateSalary(salary, event.target.value);
         let agePoints = calculateAgePoints(age, event.target.value);
+        let directorPoints = points.director;
+        let boardPoints = points.board;
+        let researchPoints = points.research;
+        let investmentPoints = points.investment;
+        let licensePoints = points.license;
+
+      
+        if(event.target.value === 'ba') {
+            researchPoints = 0;
+            setChkResearch({first: false, second: false,third : false, fourth : false});
+        } else {
+            directorPoints = 0;
+            boardPoints = 0;
+            investmentPoints = 0;
+            setChkBoard(false);
+            setChkDirector(false);
+            setChkInvestment(false);
+        }
+
+        if(event.target.value !== 'tech') {
+            licensePoints = 0;
+            setSelectedLicense('');
+        }
 
         setPoints({...points,
                     ['education'] : educationPoints,
                     ['career'] : careerPoints,
                     ['salary'] : salaryPoints,
                     ['age'] : agePoints,
+                    ['director'] : directorPoints,
+                    ['board'] : boardPoints,
+                    ['research'] : researchPoints,
+                    ['investment'] : investmentPoints,
+                    ['license'] : licensePoints,
                   });
     }
     
@@ -126,6 +163,11 @@ const Immigration = () => {
         setPoints({...points,['education'] : educationPoints});
     }
 
+    const languageChangeHandler = event => {
+        setSelectedLanguage(event.target.value);
+        setPoints({...points,['language'] : event.target.value});
+    }
+
     const careerChangeHandler = event => {
       
         setSelectedCareer(event.target.value);
@@ -141,9 +183,7 @@ const Immigration = () => {
     }
  
 
-    const additionalDegreeHandler = () => {
-        setChkMoreDegree(!chkMoreDegree);
-    }
+    
     const foreignChangeHandler = () => {
         setChkForeign(!chkForeign);
     }
@@ -181,11 +221,11 @@ const Immigration = () => {
      }, [chkOrganization.first]);
 
     useEffect(() => {
-        setPoints({...points,['org2'] : chkOrganization.first ? 10 : 0});
+        setPoints({...points,['org2'] : chkOrganization.second ? 10 : 0});
      }, [chkOrganization.second]);
 
     useEffect(() => {
-        setPoints({...points,['org3'] : chkOrganization.first ? 5 : 0});
+        setPoints({...points,['org3'] : chkOrganization.third ? 5 : 0});
      }, [chkOrganization.third]);
 
     useEffect(() => {
@@ -211,6 +251,18 @@ const Immigration = () => {
     useEffect(() => {
          setPoints({...points,['mojTraining'] : chkTraining ? 5 : 0});
      }, [chkTraining]);
+
+    useEffect(() => {
+         setPoints({...points,['director'] : chkDirector ? 10 : 0});
+     }, [chkDirector]);
+
+    useEffect(() => {
+         setPoints({...points,['board'] : chkBoard ? 5 : 0});
+     }, [chkBoard]);
+
+    useEffect(() => {
+         setPoints({...points,['investment'] : chkInvestment ? 5 : 0});
+     }, [chkInvestment]);
 
     const sumValues = obj => Object.values(obj).reduce((a, b) => Number(a)+ Number(b));
 
@@ -355,20 +407,48 @@ const Immigration = () => {
                                 </Grid >;
     }
 
+    let positionPlaceHolder = '';  
+    let investmenstPlaceHolder = '';
+    let licensePlaceHolder = '';
+    if(selectedActivity === 'ba') {
+        positionPlaceHolder =  <Grid item xs={12} >
+                                 <h3>Position</h3>
+                                    <CustomCheckbox change={() => setChkDirector(!chkDirector)}  checked ={chkDirector} label='Person to  be accepted as a representative director or representative executive officer ' />
+                                    <CustomCheckbox change={() => setChkBoard(!chkBoard)}  checked ={chkBoard} label='A member of the board of directors, executive officer, or executive member ' />
+                                </Grid >;
+                                
+        investmenstPlaceHolder = <CustomCheckbox change={() => setChkInvestment(!chkInvestment)}  checked ={chkInvestment} label='Investment of 100 million yen or more in trade or other business conducted by a public or private organization in Japan ' />;
+                             
+    }
+
+    if(selectedActivity === 'tech') {
+        licensePlaceHolder =   <Grid item xs={12} >
+                                    <h3>License</h3>
+                                    <p> Either have a national license of Japan (a license that authorizes you to conduct the relevant operation or use the relevant name), 
+                                        or have passed an examination or have a license listed in the relevant IT notification</p>
+                                        <CustomRadio data={license} change ={selectedLicenseHandler} value={selectedLicense} />
+                                </Grid >;       
+    }
+
+    let disqusConfig = {
+        url: `www.japanutil.com`,
+    }
+
     return (
         <Layout>
             <SEO title="Japan Immigration Points Calculator"
                 description="Utility tool to help you find out your accumulated points to be eligible for Permanent Residency." />
             <div className={classes.Container}>
                 <Section>
-                    <div style={{textAlign:'center'}}>Overall Points : {sumValues(points)}</div>
+                    <h2>Immigration Point-based Calculator for HSF Professionals</h2>
+                    <p className={classes.Notes}>This calculator helps you determine if you are qualified to apply for a permanent residency. Points are awarded based on your educational and professional background. Please note that this is only a guide to calculate your eligibility to and only the Immigration Bureau can decide if they will grant you a permanent residency. This utility tool was made to automate the official calculator document which can be found here.</p>
+                    {/* <div style={{textAlign:'center'}}>Overall Points : {sumValues(points)}</div> */}
                     <Grid container justify="center" spacing={2}>
                         <Grid item sm={12}  xs={12} >
-                            <h3>About you</h3><br/>
                             <Select text='Activity' value={selectedActivity}  data={activities} change={activitiesChangeHandler} />
                         </Grid >
-                        <Grid item sm={4} xs={12} > <Input text='Salary' value ={salary} type='number' change={salaryChangeHandler} /> </Grid >
-                        <Grid item sm={4} xs={12} > <Input text='Age' value ={age} type='number' change={ageChangeHandler}/> </Grid >
+                        <Grid item sm={4} xs={12} > <Input text='Salary' value ={salary} type='salary' change={salaryChangeHandler} /> </Grid >
+                        <Grid item sm={4} xs={12} > <Input text='Age' value ={age} type='age' change={ageChangeHandler}/> </Grid >
                         <Grid item sm={4} xs={12} >  
                         <Select text='Professional Experience' value={selectedCareer}  data={experience}  change={careerChangeHandler}/> </Grid >
                       
@@ -382,18 +462,14 @@ const Immigration = () => {
                             <CustomRadio data={education} change ={selectedEducationHandler} value={selectedEducation} />
                             <CustomCheckbox label='Holder of doctor’s degrees,
                             master’s degrees or professional
-                            degrees in multiple areas ' checked={chkMoreDegree} change={additionalDegreeHandler} />
+                            degrees in multiple areas ' checked={chkMoreDegree} change={() => setChkMoreDegree(!chkMoreDegree)} />
                         </Grid >
                         
                         { researchPlaceHolder }
 
-                        <Grid item xs={12} >
-                            <h3>License</h3>
-                            <p> Either have a national license of Japan (a license that authorizes you to conduct the relevant operation or use the relevant name), 
-                                or have passed an examination or have a license listed in the relevant IT notification</p>
-                                <CustomRadio data={license} change ={selectedLicenseHandler} value={selectedLicense} />
-                            
-                        </Grid >
+                        { positionPlaceHolder }
+
+                        { licensePlaceHolder }
 
                         <Grid item xs={12} >
                             <h3>Contracting organizations</h3>
@@ -407,7 +483,7 @@ const Immigration = () => {
                         <Grid item xs={12} >
                             <h3>Japanese language proficiency</h3>
                           
-                            <CustomRadio data={japaneseLanguage} change ={selectedEducationHandler} value={selectedEducation} />
+                            <CustomRadio data={japaneseLanguage} change ={languageChangeHandler} value={selectedLanguage} />
                             <p className={classes.Red}>※Excluding those who "graduated from a university or completed a course of a graduate school in Japan", and those who come under I. </p>
                         </Grid >
                         
@@ -418,10 +494,14 @@ const Immigration = () => {
                             <CustomCheckbox checked={chkProject} change={projectChangeHandler} label='Work on an advanced project in a growth field (limited to the project recognized by the Minister of Justice)' />
                             <CustomCheckbox checked={chkUniversity} change={universityChangeHandler} label='Graduation from a university separately specified by the Minister of Justice in a public notice' />
                             <CustomCheckbox checked={chkTraining} change={trainingChangeHandler} label="Have completed training conducted by JICA as part of the Innovative Asia Project implemented by the Ministry of Foreign Affairs" />
+                            {investmenstPlaceHolder}
                         </Grid >
                     </Grid >
                     </fieldset>
+                    <CommentCount config={disqusConfig} placeholder={'...'} />
+                    <Disqus config={disqusConfig} />
                 </Section>
+               
             </div>
         </Layout>
     )

@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Japan Util`,
     description: `Welcome to Japan Util. All the utilities you need while living in Japan!`,
     author: `@Brethren Igarashi`,
   },
@@ -15,6 +15,12 @@ module.exports = {
           head: false,
         },
       },
+    },
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: `wwwjapanutil`
+      }
     },
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,

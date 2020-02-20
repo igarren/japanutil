@@ -1,6 +1,9 @@
+$base-color: #f50057;
+
+
 .Container {
     margin: 0 auto;
-    max-width:  760px;
+    max-width:  960px;
     padding: 0 1.0875rem 1.45rem;
     &.Even {
         background-color: #D6D7DA;
@@ -8,5 +11,5 @@
 }
 
 .Red {
-    color: #f50057;
+    color: $base-color;
 }
