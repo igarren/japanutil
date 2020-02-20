@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 
 function NumberFormatCustom(props) {
       const { inputRef, onChange, ...other } = props;
-      console.log('INUT', props)
       return (
         <NumberFormat
           {...other}

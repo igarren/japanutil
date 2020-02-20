@@ -6,3 +6,14 @@
     border-left: 10px solid $base-color;
     padding-left: 10px;
 }
+
+.Points {
+    text-align: center;
+    position:fixed;
+    background: pink;
+    border: 2px solid rgb(204, 204, 204);
+    border-radius: 16px;
+    top: 8%;
+    right: 2%;
+    min-width: 50px;
+}

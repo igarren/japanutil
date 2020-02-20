@@ -16,12 +16,6 @@ module.exports = {
         },
       },
     },
-    {
-      resolve: `gatsby-plugin-disqus`,
-      options: {
-        shortname: `wwwjapanutil`
-      }
-    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,
     {

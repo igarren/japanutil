@@ -11,7 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import Section from '../components/ui/section/section';
 import CustomRadio from '../components/ui/radio/radio';
 import CustomCheckbox from '../components/ui/checkbox/checkbox';
-import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
+import Disqus from '../components/ui/disqus/disqus';
+
 
 const activities = [
     {text : 'Academic research', value : 'acad'},
@@ -42,10 +43,11 @@ const japaneseLanguage = [
 ];
 
 
-const Immigration = () => {
+const Immigration = (props) => {
 
     const [age, setAge] = useState('');
     const [salary, setSalary] = useState('');
+    const [disqusHolder, setDisqusHolder] = useState('');
     const [selectedActivity, setSelectedActivity] = useState('acad');
     const [selectedEducation, setSelectedEducation] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('');
@@ -127,15 +129,15 @@ const Immigration = () => {
         }
 
         setPoints({...points,
-                    ['education'] : educationPoints,
-                    ['career'] : careerPoints,
-                    ['salary'] : salaryPoints,
-                    ['age'] : agePoints,
-                    ['director'] : directorPoints,
-                    ['board'] : boardPoints,
-                    ['research'] : researchPoints,
-                    ['investment'] : investmentPoints,
-                    ['license'] : licensePoints,
+                    education: educationPoints,
+                    career : careerPoints,
+                    salary : salaryPoints,
+                    age : agePoints,
+                    director : directorPoints,
+                    board : boardPoints,
+                    research : researchPoints,
+                    investment : investmentPoints,
+                    license : licensePoints,
                   });
     }
     
@@ -145,7 +147,7 @@ const Immigration = () => {
         setSalary(salaryValue);
         let salaryPoints = calculateSalary(salaryValue, selectedActivity);
         
-        setPoints({...points,['salary'] : salaryPoints});
+        setPoints({...points, salary : salaryPoints});
     }
 
     const ageChangeHandler = (event) => {
@@ -153,32 +155,32 @@ const Immigration = () => {
         const ageValue = Number(event.target.value);
         let agePoints = calculateAgePoints(ageValue, selectedActivity);
         setAge(ageValue);
-        setPoints({...points,['age'] : agePoints});
+        setPoints({...points, age : agePoints});
     }
 
 
     const selectedEducationHandler = event => {
         let educationPoints = calculateEducationPoints(event.target.value, selectedActivity);
         setSelectedEducation(event.target.value);
-        setPoints({...points,['education'] : educationPoints});
+        setPoints({...points, education: educationPoints});
     }
 
     const languageChangeHandler = event => {
         setSelectedLanguage(event.target.value);
-        setPoints({...points,['language'] : event.target.value});
+        setPoints({...points, language : event.target.value});
     }
 
     const careerChangeHandler = event => {
       
         setSelectedCareer(event.target.value);
         const careerPoints =   calculateCareerPoints(event.target.value, selectedActivity);
-        setPoints({...points,['career'] : careerPoints});
+        setPoints({...points, career : careerPoints});
     }
 
 
     const selectedLicenseHandler = event => {
         setSelectedLicense(event.target.value);
-        setPoints({...points,['license'] : event.target.value});
+        setPoints({...points, license: event.target.value});
 
     }
  
@@ -209,60 +211,82 @@ const Immigration = () => {
     }
 
     useEffect(() => {
-        if(chkResearch.first || chkResearch.second|| chkResearch.third || chkResearch.fourth) {
-            setPoints({...points,['research'] : 15});
-        } else {
-            setPoints({...points,['research'] : 0});
+        let researchPoints = 15;
+        let researchCount = 0;
+        const research = Object.values(chkResearch);
+        for(let i =0; i < research.length;i++) {
+            if(research[i]) researchCount++;
         }
-     }, [chkResearch]);
+        if(chkResearch.first || chkResearch.second|| chkResearch.third || chkResearch.fourth) {
+            if(selectedActivity === 'acad') {
+                if (researchCount > 1) {
+                    researchPoints = 25;
+                } else{
+                    researchPoints = 20;
+                }
+            }
+        } else {
+            researchPoints = 0;
+        } 
+        setPoints({...points, research : researchPoints});
+     }, [chkResearch, selectedActivity]);
 
     useEffect(() => {
-        setPoints({...points,['org1'] : chkOrganization.first ? 10 : 0});
+        setPoints({...points, org1 : chkOrganization.first ? 10 : 0});
      }, [chkOrganization.first]);
 
     useEffect(() => {
-        setPoints({...points,['org2'] : chkOrganization.second ? 10 : 0});
+        setPoints({...points, org2 : chkOrganization.second ? 10 : 0});
      }, [chkOrganization.second]);
 
     useEffect(() => {
-        setPoints({...points,['org3'] : chkOrganization.third ? 5 : 0});
+        setPoints({...points, org3 : chkOrganization.third ? 5 : 0});
      }, [chkOrganization.third]);
 
     useEffect(() => {
-         setPoints({...points,['additionalDegree'] : chkMoreDegree ? 5 : 0});
+         setPoints({...points, additionalDegree : chkMoreDegree ? 5 : 0});
      }, [chkMoreDegree]);
      
     useEffect(() => {
-         setPoints({...points,['foreign'] : chkForeign ? 5 : 0});
+         setPoints({...points, foreign : chkForeign ? 5 : 0});
      }, [chkForeign]);
 
     useEffect(() => {
-         setPoints({...points,['japanGraduate'] : chkJapanGraduate ? 10 : 0});
+         setPoints({...points, japanGraduate : chkJapanGraduate ? 10 : 0});
      }, [chkJapanGraduate]);
 
     useEffect(() => {
-         setPoints({...points,['mojProject'] : chkProject ? 10 : 0});
+         setPoints({...points, mojProject: chkProject ? 10 : 0});
      }, [chkProject]);
 
     useEffect(() => {
-         setPoints({...points,['mojUniversity'] : chkUniversity ? 10 : 0});
+         setPoints({...points, mojUniversity : chkUniversity ? 10 : 0});
      }, [chkUniversity]);
 
     useEffect(() => {
-         setPoints({...points,['mojTraining'] : chkTraining ? 5 : 0});
+         setPoints({...points, mojTraining : chkTraining ? 5 : 0});
      }, [chkTraining]);
 
     useEffect(() => {
-         setPoints({...points,['director'] : chkDirector ? 10 : 0});
+         setPoints({...points,director : chkDirector ? 10 : 0});
      }, [chkDirector]);
 
     useEffect(() => {
-         setPoints({...points,['board'] : chkBoard ? 5 : 0});
+         setPoints({...points,board : chkBoard ? 5 : 0});
      }, [chkBoard]);
 
     useEffect(() => {
-         setPoints({...points,['investment'] : chkInvestment ? 5 : 0});
+         setPoints({...points,investment: chkInvestment ? 5 : 0});
      }, [chkInvestment]);
+
+    let disqussPlaceHolder =''; 
+    useEffect(() => {
+        setDisqusHolder(<Disqus 
+                                url={props.href}
+                                title={'Immigration Points'}
+                                identifier={'immigration'}
+                                />);
+     }, []);
 
     const sumValues = obj => Object.values(obj).reduce((a, b) => Number(a)+ Number(b));
 
@@ -430,12 +454,6 @@ const Immigration = () => {
                                 </Grid >;       
     }
 
-    let disqusConfig = {
-        url: `www.japanutil.com`,
-        identifier: 'immigration',
-        title: 'Immigration',
-    }
-
     return (
         <Layout>
             <SEO title="Japan Immigration Points Calculator"
@@ -443,8 +461,12 @@ const Immigration = () => {
             <div className={classes.Container}>
                 <Section>
                     <h2>Immigration Point-based Calculator for HSF Professionals</h2>
-                    <p className={classes.Notes}>This calculator helps you determine if you are qualified to apply for a permanent residency. Points are awarded based on your educational and professional background. Please note that this is only a guide to calculate your eligibility to and only the Immigration Bureau can decide if they will grant you a permanent residency. This utility tool was made to automate the official calculator document which can be found here.</p>
-                    {/* <div style={{textAlign:'center'}}>Overall Points : {sumValues(points)}</div> */}
+                    <p className={classes.Notes}>This calculator helps you determine if you are qualified to 
+                    apply for a permanent residency. Points are awarded based on your educational and professional background. 
+                    Please note that this is only a guide to calculate points and only the Immigration Bureau 
+                    can decide if they will grant you a permanent residency. This utility tool was made to automate the official 
+                    calculator document which can be found here.</p>
+                    <div className={classes.Points}><h1> {sumValues(points)}</h1></div>
                     <Grid container justify="center" spacing={2}>
                         <Grid item sm={12}  xs={12} >
                             <Select text='Activity' value={selectedActivity}  data={activities} change={activitiesChangeHandler} />
@@ -458,7 +480,6 @@ const Immigration = () => {
                     <br/>
                     <fieldset >
                     <Grid container justify="center" spacing={2}>
-                        {/* <h3>Bonus Points</h3> */}
                         <Grid item xs={12} >
                             <h3>Academic Background</h3>
                             <CustomRadio data={education} change ={selectedEducationHandler} value={selectedEducation} />
@@ -500,10 +521,8 @@ const Immigration = () => {
                         </Grid >
                     </Grid >
                     </fieldset>
-                    <CommentCount config={disqusConfig} placeholder={'...'} />
-                    <Disqus config={disqusConfig} />
                 </Section>
-               
+                {disqusHolder}
             </div>
         </Layout>
     )
