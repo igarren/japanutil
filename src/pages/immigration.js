@@ -172,6 +172,7 @@ const Immigration = (props) => {
         let educationPoints = calculateEducationPoints(event.target.value, selectedActivity);
         setSelectedEducation(event.target.value);
         setPoints({...points, education: educationPoints});
+     
     }
 
     const languageChangeHandler = event => {
@@ -291,6 +292,13 @@ const Immigration = (props) => {
     useEffect(() => {
          setPoints({...points,masters: chkMasters ? 5 : 0});
      }, [chkMasters]);
+
+    useEffect(() => {
+        if( selectedEducation === 'bs' ) {
+            setChkMasters(false);
+            setPoints({...points, masters: 0});
+        }
+     }, [selectedEducation]);
 
     useEffect(() => {
         setDisqusHolder(<Disqus 
