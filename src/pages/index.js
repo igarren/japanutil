@@ -10,20 +10,18 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Japan Util" description="All the utilities you need while living in Japan!" />
     <div className={classes.Container}>
-      <h1>All the utilities you need while living in Japan!</h1>
+      {/* <h2>Japan Utilへようこそ!</h2>
 
 
       <Grid container spacing={3}>
         <Grid item xs >
-          <div style={{ maxWidth: `300px`, marginBottom: `1.45rem`,textAlign: 'center' }}>
-            <Image />
-          </div>
           <p>
-            What is 【Japan Util】 It is a utilities website that aims to help Gaijins living in Japan. This site will initially include immigration points calculator and pension calculator.
-      </p>
+            What is 【Japan Util】? 
+            It is a utilities website that aims to help Gaijins living in Japan. This site will initially include immigration points calculator and pension calculator.
+        </p>
         </Grid>
 
-      </Grid>
+      </Grid> */}
     </div>
 
     {/* <div className={[classes.Container, classes.Even].join(' ')}>

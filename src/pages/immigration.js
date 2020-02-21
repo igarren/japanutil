@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , createRef} from 'react';
 
 import Layout from "../components/navigation/layout/layout";
 import SEO from "../components/seo";
@@ -62,6 +62,7 @@ const Immigration = (props) => {
     const [chkDirector, setChkDirector] = useState(false);
     const [chkBoard, setChkBoard] = useState(false);
     const [chkInvestment, setChkInvestment] = useState(false);
+    const [chkMasters, setChkMasters] = useState(false);
     const [chkResearch, setChkResearch] = useState({
         first : false,
         second : false,
@@ -78,6 +79,7 @@ const Immigration = (props) => {
         activity: 0,
         age: 0,
         education: 0,
+        masters:0 ,
         language: 0,
         career: 0,
         additionalDegree : 0,
@@ -109,6 +111,7 @@ const Immigration = (props) => {
         let researchPoints = points.research;
         let investmentPoints = points.investment;
         let licensePoints = points.license;
+        let masterPoints = points.masters;
 
       
         if(event.target.value === 'ba') {
@@ -128,6 +131,11 @@ const Immigration = (props) => {
             setSelectedLicense('');
         }
 
+        if(event.target.value === 'acad') {
+            masterPoints = 0;
+            setChkMasters(false);
+        }
+
         setPoints({...points,
                     education: educationPoints,
                     career : careerPoints,
@@ -138,6 +146,7 @@ const Immigration = (props) => {
                     research : researchPoints,
                     investment : investmentPoints,
                     license : licensePoints,
+                    masters: masterPoints
                   });
     }
     
@@ -279,7 +288,10 @@ const Immigration = (props) => {
          setPoints({...points,investment: chkInvestment ? 5 : 0});
      }, [chkInvestment]);
 
-    let disqussPlaceHolder =''; 
+    useEffect(() => {
+         setPoints({...points,masters: chkMasters ? 5 : 0});
+     }, [chkMasters]);
+
     useEffect(() => {
         setDisqusHolder(<Disqus 
                                 url={props.href}
@@ -434,6 +446,7 @@ const Immigration = (props) => {
     let positionPlaceHolder = '';  
     let investmenstPlaceHolder = '';
     let licensePlaceHolder = '';
+    let mastersGradPlaceHolder = ''
     if(selectedActivity === 'ba') {
         positionPlaceHolder =  <Grid item xs={12} >
                                  <h3>Position</h3>
@@ -454,19 +467,24 @@ const Immigration = (props) => {
                                 </Grid >;       
     }
 
+    if(selectedActivity !== 'acad' && selectedEducation !== 'bs' && selectedEducation) {
+        mastersGradPlaceHolder = <CustomCheckbox label='Holder of a professional degree relating to business management (MBA, MOT) .' checked={chkMasters} change={() => setChkMasters(!chkMasters)} />
+    }
+
     return (
         <Layout>
             <SEO title="Japan Immigration Points Calculator"
                 description="Utility tool to help you find out your accumulated points to be eligible for Permanent Residency." />
-            <div className={classes.Container}>
+                <div className={classes.Container}>
                 <Section>
                     <h2>Immigration Point-based Calculator for HSF Professionals</h2>
                     <p className={classes.Notes}>This calculator helps you determine if you are qualified to 
-                    apply for a permanent residency. Points are awarded based on your educational and professional background. 
+                    apply for a permanent residency. Points are awarded based on your educational and professional background and you need a minimum of 70 points to be eligible.
                     Please note that this is only a guide to calculate points and only the Immigration Bureau 
                     can decide if they will grant you a permanent residency. This utility tool was made to automate the official 
-                    calculator document which can be found here.</p>
-                    <div className={classes.Points}><h1> {sumValues(points)}</h1></div>
+                    calculator document which can be found <a href='http://www.immi-moj.go.jp/newimmiact_3/en/pdf/171110_point_calculation_forms.pdf'
+                    target='blank'> here.</a></p>
+                    <div className={classes.Points}><h2>Total Points: {sumValues(points)}</h2></div>
                     <Grid container justify="center" spacing={2}>
                         <Grid item sm={12}  xs={12} >
                             <Select text='Activity' value={selectedActivity}  data={activities} change={activitiesChangeHandler} />
@@ -474,7 +492,7 @@ const Immigration = (props) => {
                         <Grid item sm={4} xs={12} > <Input text='Salary' value ={salary} type='salary' change={salaryChangeHandler} /> </Grid >
                         <Grid item sm={4} xs={12} > <Input text='Age' value ={age} type='age' change={ageChangeHandler}/> </Grid >
                         <Grid item sm={4} xs={12} >  
-                        <Select text='Professional Experience' value={selectedCareer}  data={experience}  change={careerChangeHandler}/> </Grid >
+                        <Select text='Experience' value={selectedCareer}  data={experience}  change={careerChangeHandler}/> </Grid >
                       
                     </Grid >
                     <br/>
@@ -486,6 +504,7 @@ const Immigration = (props) => {
                             <CustomCheckbox label='Holder of doctor’s degrees,
                             master’s degrees or professional
                             degrees in multiple areas ' checked={chkMoreDegree} change={() => setChkMoreDegree(!chkMoreDegree)} />
+                            { mastersGradPlaceHolder }
                         </Grid >
                         
                         { researchPlaceHolder }

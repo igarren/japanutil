@@ -13,7 +13,7 @@ const disqus = props => {
    
       return (
         <div className="article-container">
-          <Disqus.DiscussionEmbed
+           <Disqus.DiscussionEmbed
             shortname={disqusShortname}
             config={disqusConfig}
           />

@@ -14,11 +14,9 @@ const CustomSelect = (props) => {
 
     return (
         <FormControl variant="outlined" style={{ width: '100%' }} >
-            <InputLabel ref={inputLabel} id="demo-simple-select-helper-label" >{props.text}</InputLabel>
+            <InputLabel ref={inputLabel}  >{props.text}</InputLabel>
             <Select
-                labelId="demo-simple-select-helper-label"
                 value={props.value}
-                id="demo-simple-select-helper"
                 labelWidth={labelWidth}
                 onChange={props.change} >
                 {props.data.map(item => (
