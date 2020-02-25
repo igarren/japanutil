@@ -1,1 +1,25 @@
 @import '_common.scss';
+
+.Header{
+    display: flex;
+    height: 50vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.About{
+    background: $base-color;
+    padding: 10px 5%;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    border-radius: 60px 0;
+}
+
+@media(max-width: 400px) 
+{
+    .Header{
+        padding:  10% 5%;
+        text-align: center;
+    }
+}

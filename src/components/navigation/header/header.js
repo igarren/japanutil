@@ -39,7 +39,6 @@ const Header = (props) => {
                 </Toolbar>
             </AppBar>
             <Drawer status={state.toggle} toggle={toggleDrawer} />
-        
         </div>
     )
 };

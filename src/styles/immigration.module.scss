@@ -10,3 +10,17 @@
 
 .Points {
 }
+
+
+.Sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    background-color: #f50057;
+    color: white;
+    z-index: 1;
+    transition: .5s ease;
+    box-shadow: 0 8px 8px -2px #ccc;
+    text-align: center
+}

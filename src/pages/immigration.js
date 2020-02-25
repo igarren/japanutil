@@ -1,4 +1,4 @@
-import React, { useState, useEffect , createRef} from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 
 import Layout from "../components/navigation/layout/layout";
 import SEO from "../components/seo";
@@ -12,6 +12,7 @@ import Section from '../components/ui/section/section';
 import CustomRadio from '../components/ui/radio/radio';
 import CustomCheckbox from '../components/ui/checkbox/checkbox';
 import Disqus from '../components/ui/disqus/disqus';
+import Fireworks from '../components/ui/fireworks/fireworks';
 
 
 const activities = [
@@ -35,16 +36,20 @@ const education = [
 const license = [
     {text : 'Have one',  value : '5'},
     {text : 'Have more than one',  value : '10'},
+    {text : 'None of the above',  value : '0'},
 ];
 
 const japaneseLanguage = [
     {text : 'I Either graduated from a foreign university with a major in Japanese-language, or have passed the N1 level of the Japanese-Language Proficiency Test or its equivalent.',  value : '15'},
     {text : 'II Have passed the N2 level of the Japanese-Language Proficiency Test or equivalent.※',  value : '10'},
+    {text : 'None of the above',  value : '0'},
 ];
 
 
 const Immigration = (props) => {
 
+    const stickyRef = useRef(0);
+    const [sticky, setSticky] = useState(false);
     const [age, setAge] = useState('');
     const [salary, setSalary] = useState('');
     const [disqusHolder, setDisqusHolder] = useState('');
@@ -306,6 +311,17 @@ const Immigration = (props) => {
                                 title={'Immigration Points'}
                                 identifier={'immigration'}
                                 />);
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (stickyRef.current.offsetTop < currentScrollY ) {
+                setSticky(true);
+            }
+            if (stickyRef.current.offsetTop && stickyRef.current.offsetTop > currentScrollY || currentScrollY === 0 ) {
+                setSticky(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
      }, []);
 
     const sumValues = obj => Object.values(obj).reduce((a, b) => Number(a)+ Number(b));
@@ -454,7 +470,8 @@ const Immigration = (props) => {
     let positionPlaceHolder = '';  
     let investmenstPlaceHolder = '';
     let licensePlaceHolder = '';
-    let mastersGradPlaceHolder = ''
+    let mastersGradPlaceHolder = '';
+    let fireworksPlaceHolder = '';
     if(selectedActivity === 'ba') {
         positionPlaceHolder =  <Grid item xs={12} >
                                  <h3>Position</h3>
@@ -470,7 +487,7 @@ const Immigration = (props) => {
         licensePlaceHolder =   <Grid item xs={12} >
                                     <h3>License</h3>
                                     <p> Either have a national license of Japan (a license that authorizes you to conduct the relevant operation or use the relevant name), 
-                                        or have passed an examination or have a license listed in the relevant IT notification</p>
+                                        or have passed an examination or have a license listed in the relevant IT notification <br/><br/></p>
                                         <CustomRadio data={license} change ={selectedLicenseHandler} value={selectedLicense} />
                                 </Grid >;       
     }
@@ -479,11 +496,16 @@ const Immigration = (props) => {
         mastersGradPlaceHolder = <CustomCheckbox label='Holder of a professional degree relating to business management (MBA, MOT) .' checked={chkMasters} change={() => setChkMasters(!chkMasters)} />
     }
 
+    if(sumValues(points) >= 70) {
+        fireworksPlaceHolder = <Fireworks />;
+    }
     return (
         <Layout>
             <SEO title="Japan Immigration Points Calculator"
                 description="Utility tool to help you find out your accumulated points to be eligible for Permanent Residency." />
                 <div className={classes.Container}>
+                <div className={classes.Wrapper}>
+                { fireworksPlaceHolder }
                 <Section>
                     <h2>Immigration Point-based Calculator for HSF Professionals</h2>
                     <p className={classes.Notes}>This calculator helps you determine if you are qualified to 
@@ -492,7 +514,7 @@ const Immigration = (props) => {
                     can decide if they will grant you a permanent residency. This utility tool was made to automate the official 
                     calculator document which can be found <a href='http://www.immi-moj.go.jp/newimmiact_3/en/pdf/171110_point_calculation_forms.pdf'
                     target='blank'> here.</a></p>
-                    <div className={classes.Points}><h2>Total Points: {sumValues(points)}</h2></div>
+                    <div className={[classes.Points, sticky ? classes.Sticky : ''].join(' ')} ref={stickyRef}><h2>Total Points: {sumValues(points)}</h2></div>
                     <Grid container justify="center" spacing={2}>
                         <Grid item sm={12}  xs={12} >
                             <Select text='Activity' value={selectedActivity}  data={activities} change={activitiesChangeHandler} />
@@ -540,7 +562,7 @@ const Immigration = (props) => {
                          <Grid item xs={12} >
                             <h3>Special  additions</h3>
                             <CustomCheckbox checked={chkForeign} change={foreignChangeHandler} label='Holder of a foreign work-related qualification, etc' />
-                            <CustomCheckbox checked={chkJapanGraduate} change={japanGraduateChangeHandler} label='Either graduated from a Japanese university or completed a course of a Japanese graduate school ' />
+                            <CustomCheckbox checked={chkJapanGraduate} change={japanGraduateChangeHandler} label='Either graduated from a Japanese university or completed a course of a Japanese graduate school' />
                             <CustomCheckbox checked={chkProject} change={projectChangeHandler} label='Work on an advanced project in a growth field (limited to the project recognized by the Minister of Justice)' />
                             <CustomCheckbox checked={chkUniversity} change={universityChangeHandler} label='Graduation from a university separately specified by the Minister of Justice in a public notice' />
                             <CustomCheckbox checked={chkTraining} change={trainingChangeHandler} label="Have completed training conducted by JICA as part of the Innovative Asia Project implemented by the Ministry of Foreign Affairs" />
@@ -550,6 +572,7 @@ const Immigration = (props) => {
                     </fieldset>
                 </Section>
                 {disqusHolder}
+                </div>
             </div>
         </Layout>
     )
