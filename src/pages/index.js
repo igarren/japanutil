@@ -18,9 +18,9 @@ const IndexPage = () => (
     <div className={[classes.Container, classes.About].join(' ')}>
       <h3>About this site</h3>
       <p>
-        Japan Util website was created to provide utility tools which can help foreigners living in Japan.
-        Currently, only the immigration points calculator for highly skilled professionals is available.
-        This site will continuously updated and more tools will be added in the future.
+        Japan Util website was created to provide utility tools and help foreigners living in Japan.
+        Currently, the immigration points calculator for highly skilled professionals is the only available tool.
+        This site will continuously be updated and more tools will be added in the future.
         If you have suggestions, feel free to email me at
        <a href="mailto:hello@japanutil.com"> hello@japanutil.com </a>. </p>
     </div>
